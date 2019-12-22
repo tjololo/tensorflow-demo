@@ -21,16 +21,16 @@ n_iterations = 5000
 batch_size = 128
 dropout = 0.3
 
-X = tf.placeholder("float", [None, n_input])
-Y = tf.placeholder("float", [None, n_output])
-keep_prob = tf.placeholder(tf.float32)
+X = tf.compat.v1.placeholder("float", [None, n_input])
+Y = tf.compat.v1.placeholder("float", [None, n_output])
+keep_prob = tf.compat.v1.placeholder(tf.float32)
 
 weights = {
-    'w1': tf.Variable(tf.truncated_normal([n_input, n_hidden1], stddev=0.1)),
-    'w2': tf.Variable(tf.truncated_normal([n_hidden1, n_hidden2], stddev=0.1)),
-    'w3': tf.Variable(tf.truncated_normal([n_hidden2, n_hidden3], stddev=0.1)),
-    'w4': tf.Variable(tf.truncated_normal([n_hidden3, n_hidden4], stddev=0.1)),
-    'out': tf.Variable(tf.truncated_normal([n_hidden4, n_output], stddev=0.1)),
+    'w1': tf.Variable(tf.random.truncated_normal([n_input, n_hidden1], stddev=0.1)),
+    'w2': tf.Variable(tf.random.truncated_normal([n_hidden1, n_hidden2], stddev=0.1)),
+    'w3': tf.Variable(tf.random.truncated_normal([n_hidden2, n_hidden3], stddev=0.1)),
+    'w4': tf.Variable(tf.random.truncated_normal([n_hidden3, n_hidden4], stddev=0.1)),
+    'out': tf.Variable(tf.random.truncated_normal([n_hidden4, n_output], stddev=0.1)),
 }
 
 biases = {
@@ -52,13 +52,13 @@ cross_entropy = tf.reduce_mean(
     tf.nn.softmax_cross_entropy_with_logits(
         labels=Y, logits=output_layer
     ))
-train_step = tf.train.AdamOptimizer(1e-4).minimize(cross_entropy)
+train_step = tf.compat.v1.train.AdamOptimizer(1e-4).minimize(cross_entropy)
 
 correct_pred = tf.equal(tf.argmax(output_layer, 1), tf.argmax(Y, 1))
 accuracy = tf.reduce_mean(tf.cast(correct_pred, tf.float32))
 
-init = tf.global_variables_initializer()
-sess = tf.Session()
+init = tf.compat.v1.global_variables_initializer()
+sess = tf.compat.v1.Session()
 sess.run(init)
 
 # train on mini batches

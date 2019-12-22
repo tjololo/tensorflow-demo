@@ -69,19 +69,19 @@ for i in range(n_iterations):
     })
 
     # print loss and accuracy (per minibatch)
-#    if i % 100 == 0:
-#        minibatch_loss, minibatch_accuracy = sess.run(
-#            [cross_entropy, accuracy],
-#            feed_dict={X: batch_x, Y: batch_y, keep_prob: 1.0}
-#        )
-#        print(
-#            "Iteration",
-#            str(i),
-#            "\t| Loss =",
-#            str(minibatch_loss),
-#            "\t| Accuracy =",
-#            str(minibatch_accuracy)
-#        )
+    if i % 100 == 0:
+        minibatch_loss, minibatch_accuracy = sess.run(
+            [cross_entropy, accuracy],
+            feed_dict={X: batch_x, Y: batch_y, keep_prob: 1.0}
+        )
+        print(
+            "Iteration",
+            str(i),
+            "\t| Loss =",
+            str(minibatch_loss),
+            "\t| Accuracy =",
+            str(minibatch_accuracy)
+        )
 
 test_accuracy = sess.run(accuracy, feed_dict={X: mnist.test.images, Y: mnist.test.labels, keep_prob: 1.0})
 print("\nAccuracy on test set:", test_accuracy)
